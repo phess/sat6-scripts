@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Remove pulp metadata so it is forced to re-sync metadata on next repo sync
+# (from https://people.redhat.com/~mmccune/reset-resync-flag.bash)
+
+function pulp_force_metadata_resync {
+    mongo pulp_database --eval 'db.repo_importers.update({"scratchpad": {$ne: null}}, {$set: {"scratchpad.repomd_revision": null}}, {"multi":true})'
+}
+
