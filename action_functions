@@ -8,3 +8,4 @@ function pulp_force_metadata_resync {
     mongo pulp_database --eval 'db.repo_importers.update({"scratchpad": {$ne: null}}, {$set: {"scratchpad.repomd_revision": null}}, {"multi":true})'
 }
 
+pulp_force_metadata_resync
