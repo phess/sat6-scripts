@@ -7,9 +7,8 @@
 USAGE="USAGE:
 \$ $0 -s SATELLITE_SERVER -o ORGANIZATION_ID [-f OUTPUT_FILENAME]
 
-** EXAMPLES **
-\$ $0 -s mysat.example.com -u admin -p mypassword -o 5 -f my-pulp-debug-cert.pem
-\$ $0 -s satellite.example.net -u pcollins -p mYpAssw0Rd -o 99   # This will output the certs to stdout"
+** EXAMPLE **
+\$ $0 -s satellite.example.net -u pcollins -p mYpAssw0Rd -o 99 -f my-pulp-debug-cert.pem"
 
 
 OUTFILE=/dev/stdout
@@ -23,7 +22,7 @@ while getopts "s:u:p:o:f:" OPT; do
    esac
 done
 
-REQUIRED_ARGS="s u p o"
+REQUIRED_ARGS="s u p o f"
 for onearg in $REQUIRED_ARGS; do
    echo "$*" |grep -q "\-${onearg}"
    if [ $? -ne 0 ]; then
@@ -42,3 +41,13 @@ APIURL="/katello/api/organizations/${ORGID}/download_debug_certificate"
 command="curl -k -u $USER:$PASS https://${SAT}${APIURL} > \"$OUTFILE\""
 echo "Running $command"
 eval "$command"
+
+
+openssl verify -CAfile $CACERTFILE "$OUTFILE"
+
+
+
+
+
+
+
