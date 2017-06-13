@@ -2,7 +2,7 @@
 
 # This script uses a Pulp debug certificate to check whether
 # the Pulp certificate is signed by the correct CA i.e.
-# by katello-server-ca.crt
+# by katello-default-ca.crt
 
 USAGE="USAGE:
 \$ $0 -s SATELLITE_SERVER -o ORGANIZATION_ID [-f OUTPUT_FILENAME]
