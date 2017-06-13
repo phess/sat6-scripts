@@ -25,7 +25,7 @@ done
 REQUIRED_ARGS="s u p o f"
 for onearg in $REQUIRED_ARGS; do
    echo "$*" |grep -q "\-${onearg}"
-   if [ $? -ne 0 ]; then
+   if [ "$?" -ne "0" ]; then
       echo "ARGUMENT MISSING: -$onearg"
       echo "$USAGE"
       exit 5
@@ -41,6 +41,14 @@ APIURL="/katello/api/organizations/${ORGID}/download_debug_certificate"
 command="curl -k -u $USER:$PASS https://${SAT}${APIURL} > \"$OUTFILE\""
 echo "Running $command"
 eval "$command"
+
+if [ "$?" -ne "0" ]; then
+   echo ""
+   echo "*** ERROR ***"
+   echo "Failed to download pulp debug certificate."
+   echo "Please check the arguments passed: $*"
+   exit 2
+fi
 
 
 openssl verify -CAfile $CACERTFILE "$OUTFILE"
