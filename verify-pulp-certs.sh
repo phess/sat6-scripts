@@ -35,10 +35,11 @@ done
 
 
 CACERTFILE=/etc/pki/katello/certs/katello-default-ca.crt
+EXTERNALCACERT=/etc/pki/katello/certs/katello-server-ca.crt
 APIURL="/katello/api/organizations/${ORGID}/download_debug_certificate"
 
 
-command="curl -k -u $USER:$PASS https://${SAT}${APIURL} > \"$OUTFILE\""
+command="curl --cacert $EXTERNALCACERT -u $USER:$PASS https://${SAT}${APIURL} > \"$OUTFILE\""
 echo "Running $command"
 eval "$command"
 
