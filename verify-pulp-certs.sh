@@ -34,7 +34,7 @@ done
 
 
 
-CACERTFILE=/etc/pki/katello/certs/katello-server-ca.crt
+CACERTFILE=/etc/pki/katello/certs/katello-default-ca.crt
 APIURL="/katello/api/organizations/${ORGID}/download_debug_certificate"
 
 
