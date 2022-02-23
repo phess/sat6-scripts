@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+## Convert a pulp artifact path to the name of what it contains.
+
+# Convert the long-string filename + its immediate parent dir into a checksum
+longstring="$(echo $1 | rev | cut -f1,2 -d/ | rev | tr -d '/')"
+
+# Grab sourcerpm filename and arch, replace `.src.` in the srpm with `.$arch.`. (yes, this is the most convenient way I can think of doing this in.)
+cd ~postgres && sudo -u postgres psql -t -d pulpcore -c "select rpm_sourcerpm, arch from rpm_package p where \"p\".\"pkgId\" = '$longstring'" | while read pkgname separator arch; do echo ${pkgname//\.src\./.$arch.}; done
